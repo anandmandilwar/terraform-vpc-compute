@@ -63,7 +63,7 @@ resource "aws_cloud9_environment_ec2" "TestCloud9" {
 #=========================================
 resource "aws_key_pair" "Kafka_Client_key_pair" {
   key_name   = "${var.aws_public_key_name}"
-  public_key = file("files/mykey.pub")
+  public_key = file("files/DemoEC2Key.pub")
 }
 
 #===============================
