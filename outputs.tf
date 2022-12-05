@@ -79,4 +79,12 @@ output "KafkaCluster_SecGrp_ID" {
 output "KafkaClient_SecGrp_ID" {
   description = "Security Group ID for Kafka Client"
   value       = try(aws_security_group.kafkaclient_sg.id, "")
-}
+
+
+############
+### Key Pair
+############
+output "private_key" {
+  value     = tls_private_key.DemoPrivateKey.private_key_pem
+  sensitive = true
+}}

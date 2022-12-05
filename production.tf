@@ -58,12 +58,23 @@ resource "aws_cloud9_environment_ec2" "TestCloud9" {
   }
 }
 
-#=========================================
-# Below resource is to create public key
-#=========================================
-resource "aws_key_pair" "Kafka_Client_key_pair" {
+#===================================================
+# Below resource is to create public and private key
+#===================================================
+#resource "aws_key_pair" "Kafka_Client_key_pair" {
+#  key_name   = "${var.aws_public_key_name}"
+#  public_key = file("files/mykey.pub")
+#}
+
+
+resource "tls_private_key" "DemoPrivateKey" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "generated_key" {
   key_name   = "${var.aws_public_key_name}"
-  public_key = file("files/DemoEC2Key.pub")
+  public_key = tls_private_key.DemoPrivateKey.public_key_openssh
 }
 
 #===============================
