@@ -121,8 +121,7 @@ data "aws_ami" "linux" {
 resource "aws_instance" "Kafka_Client" {
   ami                     = data.aws_ami.linux.id
   instance_type           = var.aws_instance_type
-  #availability_zone       = "${var.aws_availability_zone}"
-  key_name                = "${aws_key_pair.Kafka_Client_key_pair.id}"
+  key_name                = aws_key_pair.generated_key.key_name	
   vpc_security_group_ids  = ["${aws_security_group.kafkaclient_sg.id}"]
   subnet_id               = module.networking.private_subnets_id-1[0]
   user_data               = fileexists("kafkabinariesInstall.sh") ? file("kafkabinariesInstall.sh") : null # # Install docker in the ubuntu
