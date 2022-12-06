@@ -169,6 +169,15 @@ resource "aws_security_group_rule" "KafkaConnect" {
   security_group_id = aws_security_group.kafkaclient_sg.id
 }
 
+resource "aws_security_group_rule" "kafkaCommFromPubSubnet" {
+  protocol          = "tcp"
+  from_port         = 3500
+  to_port           = 3900
+  type              = "ingress"
+  cidr_blocks       = [var.public_subnets_cidr][0]
+  security_group_id = aws_security_group.kafkaclient_sg.id
+}
+
 #-----------------------------
 # Outbound for Kafka Client SG
 #-----------------------------
