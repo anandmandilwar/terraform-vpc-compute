@@ -1,17 +1,3 @@
-#resource "random_id" "random_id_prefix" {
-#  byte_length = 2
-#}
-/*====
-Variables used across all modules
-======*/
-#locals {
-#  production_availability_zones = ["${var.region}a", "${var.region}b", "${var.region}c"]
-#}
-
-#data "aws_ssm_parameter" "ami" {
-#  name = "/aws/service/cloud9/amis/amazonlinux-2-x86_64"
-#}
-
 ## To get Own ip
 data "http" "laptop_outbound_ip" {
   url = "https://ifconfig.me/ip"
@@ -33,7 +19,6 @@ data "aws_ami" "AmazonLinux2" {
 
 module "networking" {
 source = "./modules/networking"
-  #region_name          = "${var.region}"
   environment          = "${var.environment}"
   vpc_cidr             = "${var.vpc_cidr}"
   public_subnets_cidr  = "${var.public_subnets_cidr}"
@@ -63,12 +48,6 @@ resource "aws_cloud9_environment_ec2" "TestCloud9" {
 #===================================================
 # Below resource is to create public and private key
 #===================================================
-#resource "aws_key_pair" "Kafka_Client_key_pair" {
-#  key_name   = "${var.aws_public_key_name}"
-#  public_key = file("files/mykey.pub")
-#}
-
-
 resource "tls_private_key" "DemoPrivateKey" {
   algorithm = "RSA"
   rsa_bits  = 4096
